@@ -1,5 +1,5 @@
 package it.manager.tournamentmanager.entities.enums;
 
 public enum MatchState {
-    PLANNED, CONCLUDED, CANCELED
+    PLANNED, CONCLUDED, CANCELED, ONGOING
 }

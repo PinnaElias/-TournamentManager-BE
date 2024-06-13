@@ -24,6 +24,6 @@ public class Match {
     private MatchState matchState;
     private Bracket bracket;
     private Team winner;
-    private Team defeated;
+    private Team loser;
 
 }
