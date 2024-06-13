@@ -1,8 +1,7 @@
 package it.manager.tournamentmanager.entities;
 
 import it.manager.tournamentmanager.entities.enums.MatchState;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -20,16 +19,28 @@ public class Tournament {
     private String avatar;
     private Game game;
     private String name;
+
+    @OneToMany(mappedBy = "tournament")
     private List<Team> participants;
+
     private Bracket bracket;
     private MatchState tournamentState;
+
+    @OneToOne
+    @JoinColumn(name = "manager_id")
     private User tournamentManager;
+
     private String description;
     private String prize;
     private LocalDate startingDate;
     private LocalDate endingDate;
     private LocalTime startingTime;
+
+    @OneToOne
+    @JoinColumn(name = "winner_id")
     private Team winner;
+
+    @OneToMany
     private List<Team> losers;
 
 }
