@@ -15,24 +15,32 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails{
     @Id
     @GeneratedValue
     private UUID id;
 
     private String password;
     private String username;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "avatar_url")
     private String avatarUrl;
     private String email;
+    @Column(name = "user_role")
     private UserRole userRole;
+
     @OneToMany(mappedBy = "user")
     private List<Game> likedGames;
 
     @OneToMany(mappedBy = "user")
     private List<Team> teams;
 
+    @Column(name = "preferred_roles")
     private Role preferredRole;
     private String nationality;
     private int mvpCount;
