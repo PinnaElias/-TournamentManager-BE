@@ -1,9 +1,11 @@
 package it.manager.tournamentmanager.services;
 
 import it.manager.tournamentmanager.entities.User;
+import it.manager.tournamentmanager.entities.enums.UserRole;
 import it.manager.tournamentmanager.repositories.UserRepository;
 import it.manager.tournamentmanager.requests.create.CreateUserRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateUserRequestBody;
+import it.manager.tournamentmanager.responses.DeleteUserResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,7 +72,7 @@ public class UserService {
         userToCreate.setFirstName(userRequestBody.getFirstName());
         userToCreate.setLastName(userRequestBody.getLastName());
         userToCreate.setAvatarUrl(userRequestBody.getAvatarUrl());
-        userToCreate.setUserRole(UserRole.valueOf(userRequestBody.getUserRole()));
+        userToCreate.setUserRole(userRequestBody.getUserRole());
     }
 
     public void updateUserFields(User userToUpdate, UpdateUserRequestBody userRequestBody) {
@@ -93,7 +95,7 @@ public class UserService {
             userToUpdate.setAvatarUrl(userRequestBody.getAvatarUrl());
         }
         if (userRequestBody.getUserRole() != null) {
-            userToUpdate.setUserRole(UserRole.valueOf(userRequestBody.getUserRole()));
+            userToUpdate.setUserRole(userRequestBody.getUserRole());
         }
     }
 
