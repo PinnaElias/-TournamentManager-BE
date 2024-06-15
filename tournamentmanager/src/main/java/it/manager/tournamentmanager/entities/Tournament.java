@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@Entity
 public class Tournament {
 
     @Id
@@ -20,7 +21,12 @@ public class Tournament {
     private Game game;
     private String name;
 
-    @OneToMany(mappedBy = "tournament")
+    @ManyToMany
+    @JoinTable(
+            name = "tournament_participants",
+            joinColumns = @JoinColumn(name = "tournament_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
     private List<Team> participants;
 
     private Bracket bracket;
@@ -41,6 +47,11 @@ public class Tournament {
     private Team winner;
 
     @OneToMany
+    @JoinTable(
+            name = "tournament_losers",
+            joinColumns = @JoinColumn(name = "tournament_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
     private List<Team> losers;
 
 }

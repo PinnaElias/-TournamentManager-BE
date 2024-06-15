@@ -1,7 +1,6 @@
 package it.manager.tournamentmanager.services;
 
 import it.manager.tournamentmanager.entities.User;
-import it.manager.tournamentmanager.entities.enums.UserRole;
 import it.manager.tournamentmanager.repositories.UserRepository;
 import it.manager.tournamentmanager.requests.create.CreateUserRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateUserRequestBody;
@@ -20,46 +19,46 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Page<User> retrieveAllUsers(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        return userRepository.findAll(pageable);
+        return userRepo.findAll(pageable);
     }
 
     public User retrieveUserById(UUID userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        return userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
     }
 
     public User retrieveByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow( () -> new RuntimeException("User not found with email: " + email));
+        return userRepo.findByEmail(email).orElseThrow( () -> new RuntimeException("User not found with email: " + email));
     }
 
     public User addUser(CreateUserRequestBody userRequestBody) {
         User userToCreate = new User();
         setUserFields(userToCreate, userRequestBody);
 
-        return userRepository.save(userToCreate);
+        return userRepo.save(userToCreate);
     }
 
     public User editUser(UUID userId, UpdateUserRequestBody userRequestBody) {
-        User userToUpdate = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        User userToUpdate = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         updateUserFields(userToUpdate, userRequestBody);
 
-        return userRepository.save(userToUpdate);
+        return userRepo.save(userToUpdate);
     }
 
     public DeleteUserResponseBody removeUser(UUID userId) {
-        User userToDelete = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        User userToDelete = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
         User userToShow = new User();
 
         setUserFieldsForDeletion(userToShow, userToDelete);
 
-        userRepository.delete(userToShow);
+        userRepo.delete(userToShow);
 
         return  new DeleteUserResponseBody("User deleted successfully", userToShow);
     }

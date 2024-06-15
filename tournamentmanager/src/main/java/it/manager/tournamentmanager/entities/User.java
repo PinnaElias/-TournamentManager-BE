@@ -37,7 +37,8 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user")
     private List<Game> likedGames;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToOne
+    @JoinColumn
     private List<Team> teams;
 
     @Column(name = "preferred_roles")

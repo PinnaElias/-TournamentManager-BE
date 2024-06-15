@@ -25,19 +25,30 @@ public class CreateUserRequestBody {
     @NotBlank(message = "e-mail cannot be empty")
     @Email(message = "email does not have the right format")
     private String email;
-
+//
     @NotBlank(message = "choose at least one option!")
     private List<Game> likedGames;
 
     @NotBlank(message = "choose at least one option!")
     private Role preferredRole;
-
+//
     @NotBlank(message = "nationality cannot be empty")
     private String nationality;
 
     @NotBlank(message = "avatar url cannot be empty")
     private String avatarUrl;
-
+//
     @NotBlank(message = "user must have a role")
     private UserRole userRole;
+
+//    {
+//        "password": "a",
+//            "username": "io",
+//            "firstName": "io",
+//            "lastName": "tu",
+//            "email": "io@tu.com",
+//            "nationality": "italian",
+//            "avatarUrl": "aaa",
+//            "userRole": "ADMIN"
+//    }
 }
