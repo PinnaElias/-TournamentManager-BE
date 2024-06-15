@@ -18,7 +18,11 @@ public class Tournament {
     private UUID id;
 
     private String avatar;
+
+    @ManyToOne
+    @JoinColumn(name = "game_id")
     private Game game;
+
     private String name;
 
     @ManyToMany
@@ -29,7 +33,11 @@ public class Tournament {
     )
     private List<Team> participants;
 
+    @OneToOne
+    @JoinColumn(name = "bracket_id")
     private Bracket bracket;
+
+    @Enumerated(EnumType.STRING)
     private MatchState tournamentState;
 
     @OneToOne
@@ -46,7 +54,8 @@ public class Tournament {
     @JoinColumn(name = "winner_id")
     private Team winner;
 
-    @OneToMany
+
+    @ManyToMany
     @JoinTable(
             name = "tournament_losers",
             joinColumns = @JoinColumn(name = "tournament_id"),

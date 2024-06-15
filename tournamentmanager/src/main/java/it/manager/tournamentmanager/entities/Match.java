@@ -28,9 +28,14 @@ public class Match {
 
     private int teamAScore;
     private int teamBScore;
+    @Enumerated(EnumType.STRING)
     private MatchState matchState;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
+
+    @ManyToOne
     @JoinColumn(name = "bracket_id")
     private Bracket bracket;
 

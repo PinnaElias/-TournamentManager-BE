@@ -28,21 +28,32 @@ public class User implements UserDetails{
 
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "avatar_url")
     private String avatarUrl;
+
     private String email;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToMany
+    @JoinTable(
+            name = "user_liked_games",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "game_id")
+    )
     private List<Game> likedGames;
 
     @ManyToOne
-    @JoinColumn
-    private List<Team> teams;
+    @JoinColumn(name = "team_id")
+    private Team team;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "preferred_roles")
     private Role preferredRole;
+
     private String nationality;
     private int mvpCount;
 

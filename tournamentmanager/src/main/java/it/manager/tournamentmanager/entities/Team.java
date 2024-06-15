@@ -16,29 +16,37 @@ public class Team {
 
     private String name;
     private String avatar;
-    private Game game;
 
     @ManyToOne
-    @JoinColumn(name = "tournament_id")
-    private Tournament tournament;
+    @JoinColumn(name = "game_id")
+    private Game game;
+
+//    @ManyToOne
+//    @JoinColumn(name = "tournament_id")
+//    private Tournament tournament;
 
     @ManyToMany
     @JoinTable(
-            name = "tournament_participants",
+            name = "team_active_tournaments",
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "tournament_id")
     )
-    private List<Tournament> activeTournaments;
+    private List<Tournament> activeTournaments;;
 
     @ManyToMany
     @JoinTable(
-            name = "tournament_history",
+            name = "team_tournaments_history",
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "tournament_id")
     )
     private List<Tournament> tournamentsHistory;
 
-    @OneToMany(mappedBy = "teams")
+    @ManyToMany
+    @JoinTable(
+            name = "team_members",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private List<User> members;
     private String nationality;
 }
