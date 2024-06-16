@@ -34,14 +34,14 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<User> getUser(@PathVariable UUID userId) {
-        return new ResponseEntity<>(userService.retrieveUserById(userId), HttpStatus.OK);
+    public ResponseEntity<User> getUser(@PathVariable UUID id) {
+        return new ResponseEntity<>(userService.retrieveUserById(id), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<User> updateUser(@RequestBody @Validated UpdateUserRequestBody userRequestBody,
-                                           @PathVariable UUID userId,
+                                           @PathVariable UUID id,
                                            BindingResult validation) throws BadRequestException {
         if(validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors()
@@ -49,12 +49,12 @@ public class UserController {
                     .map(objectError -> objectError.getDefaultMessage())
                     .reduce("", (acc, curr) -> acc+curr));
         }
-        return new ResponseEntity<>(userService.editUser(userId, userRequestBody), HttpStatus.OK);
+        return new ResponseEntity<>(userService.editUser(id, userRequestBody), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<DeleteUserResponseBody> deleteUser(@PathVariable UUID userId) {
-        return new ResponseEntity<>(userService.removeUser(userId), HttpStatus.OK);
+    public ResponseEntity<DeleteUserResponseBody> deleteUser(@PathVariable UUID id) {
+        return new ResponseEntity<>(userService.removeUser(id), HttpStatus.OK);
     }
 }
