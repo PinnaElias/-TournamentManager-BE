@@ -1,5 +1,6 @@
 package it.manager.tournamentmanager;
 
+import it.manager.tournamentmanager.repositories.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
