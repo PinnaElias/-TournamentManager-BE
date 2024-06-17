@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -14,7 +13,7 @@ public class Match {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private int id;
     private LocalDate startingDate;
     private LocalTime startingTime;
 
