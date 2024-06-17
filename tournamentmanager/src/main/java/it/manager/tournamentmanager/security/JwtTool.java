@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtTool {
@@ -31,8 +32,8 @@ public class JwtTool {
                 .build().parse(token);
     }
 
-    public int getIdFromUser(String token){
-        return Integer.parseInt(Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).
+    public UUID getIdFromUser(String token){
+        return UUID.fromString(Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).
                 build().parseSignedClaims(token).getPayload().getSubject());
     }
 }

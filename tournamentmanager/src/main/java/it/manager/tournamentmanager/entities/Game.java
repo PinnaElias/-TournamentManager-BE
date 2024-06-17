@@ -1,13 +1,13 @@
 package it.manager.tournamentmanager.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
+@Entity
 public class Game {
 
     @Id
@@ -16,6 +16,13 @@ public class Game {
 
     private String name;
     private int maxPlayersNumberForTeam;
-    private int activeTournaments;
     private String avatar;
+
+    @ManyToMany
+    @JoinTable(
+            name = "game_subscribers",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> subscribers;
 }

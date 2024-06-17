@@ -1,10 +1,7 @@
 package it.manager.tournamentmanager.entities;
 
 import it.manager.tournamentmanager.entities.enums.MatchState;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -12,6 +9,7 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
+@Entity
 public class Match {
 
     @Id
@@ -30,9 +28,14 @@ public class Match {
 
     private int teamAScore;
     private int teamBScore;
+    @Enumerated(EnumType.STRING)
     private MatchState matchState;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
+
+    @ManyToOne
     @JoinColumn(name = "bracket_id")
     private Bracket bracket;
 
