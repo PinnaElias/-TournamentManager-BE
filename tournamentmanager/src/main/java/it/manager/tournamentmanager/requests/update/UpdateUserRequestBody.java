@@ -5,6 +5,7 @@ import it.manager.tournamentmanager.entities.enums.Role;
 import it.manager.tournamentmanager.entities.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class UpdateUserRequestBody {
 
     private String nationality;
 
+    @URL(message = "URL does not have the right format")
     private String avatarUrl;
 
     private UserRole userRole;

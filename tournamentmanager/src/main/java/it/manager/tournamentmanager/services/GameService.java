@@ -3,6 +3,7 @@ package it.manager.tournamentmanager.services;
 import it.manager.tournamentmanager.entities.Game;
 import it.manager.tournamentmanager.repositories.GameRepository;
 import it.manager.tournamentmanager.requests.create.CreateGameRequestBody;
+import it.manager.tournamentmanager.requests.update.UpdateGameRequestBody;
 import it.manager.tournamentmanager.responses.DeleteGameResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,12 +50,36 @@ public class GameService {
         return new DeleteGameResponseBody("Game removed successfully", gameToShow);
     }
 
-//    public Province editProvince(int provinceId, UpdateProvinceRequestBody provinceRequestBody){
-//        Province provinceToUpdate = provinceRepository.findById(provinceId).orElseThrow(()-> new RuntimeException("Province not found with name:" + provinceId));
-//        updateProvinceFields(provinceToUpdate, provinceRequestBody);
-//        return provinceRepository.save(provinceToUpdate);
-//    }
-//    CREA ANCHE L'HELPER
+
+
+    public Game editGame(UUID gameId, UpdateGameRequestBody gameRequestBody){
+        Game gameToUpdate = gameRepo.findById(gameId)
+                .orElseThrow(()-> new RuntimeException("Game not found with Id:" + gameId));
+
+        updateGameFields(gameToUpdate, gameRequestBody);
+        return gameRepo.save(gameToUpdate);
+    }
+
+     /**
+     * HELPER
+     * @param gameToUpdate
+     * @param gameRequestBody
+     */
+
+     public void updateGameFields(Game gameToUpdate, UpdateGameRequestBody gameRequestBody){
+         if (gameRequestBody.getName() != null){
+             gameToUpdate.setName(gameRequestBody.getName());
+         }
+         if (gameRequestBody.getAvatar() != null){
+             gameToUpdate.setAvatar(gameRequestBody.getAvatar());
+         }
+         if (gameRequestBody.getMaxPlayersNumberForTeam() != 0){
+             gameToUpdate.setMaxPlayersNumberForTeam(gameRequestBody.getMaxPlayersNumberForTeam());
+         }
+         if (gameRequestBody.getSubscribers() != null){
+             gameToUpdate.setSubscribers(gameRequestBody.getSubscribers());
+         }
+     }
 
     /**
      * HELPER
