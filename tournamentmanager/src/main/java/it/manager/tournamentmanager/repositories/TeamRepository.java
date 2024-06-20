@@ -2,7 +2,6 @@ package it.manager.tournamentmanager.repositories;
 
 import it.manager.tournamentmanager.entities.Game;
 import it.manager.tournamentmanager.entities.Team;
-import it.manager.tournamentmanager.entities.Tournament;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

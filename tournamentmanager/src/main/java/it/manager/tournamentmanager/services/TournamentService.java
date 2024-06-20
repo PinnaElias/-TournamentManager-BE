@@ -1,8 +1,10 @@
 package it.manager.tournamentmanager.services;
 
+import it.manager.tournamentmanager.entities.Game;
 import it.manager.tournamentmanager.entities.Match;
 import it.manager.tournamentmanager.entities.Team;
 import it.manager.tournamentmanager.entities.Tournament;
+import it.manager.tournamentmanager.repositories.GameRepository;
 import it.manager.tournamentmanager.repositories.TeamRepository;
 import it.manager.tournamentmanager.repositories.TournamentRepository;
 import it.manager.tournamentmanager.requests.create.CreateMatchRequestBody;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,6 +31,9 @@ public class TournamentService {
     @Autowired
     private TeamRepository teamRepo;
 
+    @Autowired
+    private GameRepository gameRepo;
+
     public Page<Tournament> retrieveAllTournaments(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return tournamentRepo.findAll(pageable);
@@ -36,6 +42,12 @@ public class TournamentService {
     public Tournament retrieveTournamentById(UUID tournamentId) {
         return tournamentRepo.findById(tournamentId)
                 .orElseThrow(() -> new RuntimeException("Tournament not found with id: " + tournamentId));
+    }
+
+    public List<Tournament> findAllTournamentsByGame(UUID gameId) {
+        Game game = gameRepo.findById(gameId)
+                .orElseThrow(() -> new RuntimeException("Game not found with id: " + gameId));
+        return tournamentRepo.findAllByGame(game);
     }
 
     public Tournament addTournament(CreateTournamentRequestBody tournamentRequestBody){
