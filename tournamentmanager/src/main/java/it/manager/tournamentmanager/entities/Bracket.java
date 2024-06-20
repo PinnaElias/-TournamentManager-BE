@@ -29,9 +29,6 @@ public class Bracket {
     )
     private List<Team> participants;
 
-//    @OneToMany(mappedBy = "bracket")
-//    private List<Match> matches;
-
     @OneToOne
     @JoinColumn(name = "winner_id")
     private Team winner;
