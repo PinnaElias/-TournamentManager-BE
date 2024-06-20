@@ -58,7 +58,8 @@ public class UserService {
 
         setUserFieldsForDeletion(userToShow, userToDelete);
 
-        userRepo.delete(userToShow);
+        userRepo.delete(userToDelete);
+        System.out.println(userToShow);
 
         return  new DeleteUserResponseBody("User deleted successfully", userToShow);
     }

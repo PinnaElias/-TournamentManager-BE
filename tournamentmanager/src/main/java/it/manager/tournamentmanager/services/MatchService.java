@@ -46,6 +46,7 @@ public class MatchService {
         Match matchToShow = new Match();
         setMatchFieldsForDeletion(matchToShow, matchToDelete);
         matchRepo.delete(matchToDelete);
+        System.out.println(matchToShow);
 
         return new DeleteMatchResponseBody("Match Removed successfully", matchToShow);
     }

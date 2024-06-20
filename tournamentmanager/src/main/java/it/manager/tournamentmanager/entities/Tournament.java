@@ -46,8 +46,11 @@ public class Tournament {
 
     private String description;
     private String prize;
+    @Column(name = "starting_date")
     private LocalDate startingDate;
+    @Column(name = "ending_date")
     private LocalDate endingDate;
+    @Column(name = "starting_time")
     private LocalTime startingTime;
 
     @OneToOne
