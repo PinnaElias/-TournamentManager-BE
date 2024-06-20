@@ -1,13 +1,9 @@
 package it.manager.tournamentmanager.services;
 
-import it.manager.tournamentmanager.entities.Game;
 import it.manager.tournamentmanager.entities.Match;
 import it.manager.tournamentmanager.repositories.MatchRepository;
-import it.manager.tournamentmanager.requests.create.CreateGameRequestBody;
 import it.manager.tournamentmanager.requests.create.CreateMatchRequestBody;
-import it.manager.tournamentmanager.requests.update.UpdateGameRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateMatchRequestBody;
-import it.manager.tournamentmanager.responses.DeleteGameResponseBody;
 import it.manager.tournamentmanager.responses.DeleteMatchResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class MatchService {
