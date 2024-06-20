@@ -21,10 +21,6 @@ public class Team {
     @JoinColumn(name = "game_id")
     private Game game;
 
-//    @ManyToOne
-//    @JoinColumn(name = "tournament_id")
-//    private Tournament tournament;
-
     @ManyToMany
     @JoinTable(
             name = "team_active_tournaments",
