@@ -46,6 +46,7 @@ public class GameService {
         Game gameToShow = new Game();
         setGameFieldsForDeletion(gameToShow, gameToDelete);
         gameRepo.delete(gameToDelete);
+        System.out.println(gameToShow);
 
         return new DeleteGameResponseBody("Game removed successfully", gameToShow);
     }

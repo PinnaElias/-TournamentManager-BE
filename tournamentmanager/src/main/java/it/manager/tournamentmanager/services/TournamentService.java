@@ -1,11 +1,15 @@
 package it.manager.tournamentmanager.services;
 
 import it.manager.tournamentmanager.entities.Match;
+import it.manager.tournamentmanager.entities.Team;
 import it.manager.tournamentmanager.entities.Tournament;
+import it.manager.tournamentmanager.repositories.TeamRepository;
 import it.manager.tournamentmanager.repositories.TournamentRepository;
 import it.manager.tournamentmanager.requests.create.CreateMatchRequestBody;
+import it.manager.tournamentmanager.requests.create.CreateTournamentRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateMatchRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateTournamentRequestBody;
+import it.manager.tournamentmanager.responses.DeleteTournamentResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,16 +25,68 @@ public class TournamentService {
     @Autowired
     private TournamentRepository tournamentRepo;
 
+    @Autowired
+    private TeamRepository teamRepo;
+
     public Page<Tournament> retrieveAllTournaments(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return tournamentRepo.findAll(pageable);
     }
 
-    public Tournament retrieveCustomerById(UUID tournamentId) {
+    public Tournament retrieveTournamentById(UUID tournamentId) {
         return tournamentRepo.findById(tournamentId)
                 .orElseThrow(() -> new RuntimeException("Tournament not found with id: " + tournamentId));
     }
 
+    public Tournament addTournament(CreateTournamentRequestBody tournamentRequestBody){
+        Tournament tournamentToCreate = new Tournament();
+        setTournamentFields(tournamentToCreate, tournamentRequestBody);
+
+        return tournamentRepo.save(tournamentToCreate);
+    }
+
+    public Tournament editTournament(UUID tournamentId, UpdateTournamentRequestBody tournamentRequestBody){
+        Tournament tournamentToUpdate = tournamentRepo.findById(tournamentId)
+                .orElseThrow(()-> new RuntimeException("Tournament not found with Id:" + tournamentId));
+        updateTournamentFields(tournamentToUpdate, tournamentRequestBody);
+        return tournamentRepo.save(tournamentToUpdate);
+    }
+
+    public DeleteTournamentResponseBody removeTournament(UUID tournamentId){
+        Tournament tournamentToDelete = tournamentRepo.findById(tournamentId)
+                .orElseThrow(()-> new RuntimeException("Tournament not found with Id:" + tournamentId));
+
+        Tournament tournamentToShow = new Tournament();
+
+        setTournamentFieldsForDeletion(tournamentToShow, tournamentToDelete);
+        tournamentRepo.delete(tournamentToDelete);
+        System.out.println(tournamentToShow);
+
+        return new DeleteTournamentResponseBody("Tournament deleted successfully!", tournamentToShow);
+    }
+
+    public Tournament addTeamToTournament(UUID tournamentId, UUID teamId) {
+        Tournament tournament = tournamentRepo.findById(tournamentId)
+                .orElseThrow(() -> new RuntimeException("Tournament not found with id: " + tournamentId));
+        Team team = teamRepo.findById(teamId)
+                .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
+        tournament.getParticipants().add(team);
+        return tournamentRepo.save(tournament);
+    }
+
+    public Tournament addLoserTeamToTournament(UUID tournamentId, UUID teamId) {
+        Tournament tournament = tournamentRepo.findById(tournamentId)
+                .orElseThrow(() -> new RuntimeException("Tournament not found with id: " + tournamentId));
+        Team team = teamRepo.findById(teamId)
+                .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
+
+        if (!tournament.getParticipants().contains(team)) {
+            throw new RuntimeException("This team does not participate in the tournament with Id: " + tournamentId );
+        }
+
+        tournament.getLosers().add(team);
+        return tournamentRepo.save(tournament);
+    }
 
     /**
      * HELPER
@@ -39,7 +95,7 @@ public class TournamentService {
      * @param tournamentRequestBody
      */
 
-    public void setTournamentFields(Tournament tournamentToCreate, UpdateTournamentRequestBody tournamentRequestBody) {
+    public void setTournamentFields(Tournament tournamentToCreate, CreateTournamentRequestBody tournamentRequestBody) {
         tournamentToCreate.setAvatar(tournamentRequestBody.getAvatar());
         tournamentToCreate.setGame(tournamentRequestBody.getGame());
         tournamentToCreate.setName(tournamentRequestBody.getName());
@@ -48,9 +104,7 @@ public class TournamentService {
         tournamentToCreate.setDescription(tournamentRequestBody.getDescription());
         tournamentToCreate.setPrize(tournamentRequestBody.getPrize());
         tournamentToCreate.setEndingDate(tournamentRequestBody.getEndingDate());
-        tournamentToCreate.setWinner(tournamentRequestBody.getWinner());
         tournamentToCreate.setParticipants(tournamentRequestBody.getParticipants());
-        tournamentToCreate.setLosers(tournamentRequestBody.getLosers());
     }
 
     public void setTournamentFieldsForDeletion(Tournament tournamentToCreate, Tournament tournamentRequestBody) {
