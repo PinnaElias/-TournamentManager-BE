@@ -106,6 +106,9 @@ public class UserService {
         if (userRequestBody.getLikedGames() != null){
             userToUpdate.setLikedGames(userRequestBody.getLikedGames());
         }
+        if (userRequestBody.getMvpCount() != 0){
+            userToUpdate.setMvpCount(userRequestBody.getMvpCount());
+        }
     }
 
     public void setUserFieldsForDeletion(User userToCreate, User userRequestBody) {
@@ -116,5 +119,8 @@ public class UserService {
         userToCreate.setLastName(userRequestBody.getLastName());
         userToCreate.setAvatarUrl(userRequestBody.getAvatarUrl());
         userToCreate.setUserRole(userRequestBody.getUserRole());
+        userToCreate.setMvpCount(userRequestBody.getMvpCount());
+        userToCreate.setNationality(userRequestBody.getNationality());
+        userToCreate.setLikedGames(userRequestBody.getLikedGames());
     }
 }
