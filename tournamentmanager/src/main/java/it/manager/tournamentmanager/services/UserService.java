@@ -73,6 +73,9 @@ public class UserService {
         userToCreate.setLastName(userRequestBody.getLastName());
         userToCreate.setAvatarUrl(userRequestBody.getAvatarUrl());
         userToCreate.setUserRole(userRequestBody.getUserRole());
+        userToCreate.setNationality(userRequestBody.getNationality());
+        userToCreate.setLikedGames(userRequestBody.getLikedGames());
+        userToCreate.setPreferredRole(userRequestBody.getPreferredRole());
     }
 
     public void updateUserFields(User userToUpdate, UpdateUserRequestBody userRequestBody) {
