@@ -33,4 +33,6 @@ public class UpdateUserRequestBody {
     private String avatarUrl;
 
     private UserRole userRole;
+
+    private int mvpCount;
 }
