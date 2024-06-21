@@ -99,5 +99,6 @@ public class GameService {
         gameToCreate.setName(gameRequestBody.getName());
         gameToCreate.setAvatar(gameRequestBody.getAvatar());
         gameToCreate.setMaxPlayersNumberForTeam(gameRequestBody.getMaxPlayersNumberForTeam());
+        gameToCreate.setSubscribers(gameRequestBody.getSubscribers());
     }
 }

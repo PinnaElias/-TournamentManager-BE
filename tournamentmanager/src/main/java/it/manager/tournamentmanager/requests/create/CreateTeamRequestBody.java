@@ -22,7 +22,6 @@ public class CreateTeamRequestBody {
     private String avatar;
     @NotBlank(message = "Choose a game!")
     private Game game;
-    @NotBlank(message = "Add at least yourself to your team!")
     private List<User> members;
     @NotBlank(message = "Where are you from? :)")
     private String nationality;
