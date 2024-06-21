@@ -1,15 +1,12 @@
 package it.manager.tournamentmanager.services;
 
 import it.manager.tournamentmanager.entities.Game;
-import it.manager.tournamentmanager.entities.Match;
 import it.manager.tournamentmanager.entities.Team;
 import it.manager.tournamentmanager.entities.Tournament;
 import it.manager.tournamentmanager.repositories.GameRepository;
 import it.manager.tournamentmanager.repositories.TeamRepository;
 import it.manager.tournamentmanager.repositories.TournamentRepository;
-import it.manager.tournamentmanager.requests.create.CreateMatchRequestBody;
 import it.manager.tournamentmanager.requests.create.CreateTournamentRequestBody;
-import it.manager.tournamentmanager.requests.update.UpdateMatchRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateTournamentRequestBody;
 import it.manager.tournamentmanager.responses.DeleteTournamentResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,6 @@ package it.manager.tournamentmanager.services;
 
 import it.manager.tournamentmanager.entities.Game;
 import it.manager.tournamentmanager.entities.Team;
-import it.manager.tournamentmanager.entities.Tournament;
 import it.manager.tournamentmanager.entities.User;
 import it.manager.tournamentmanager.repositories.GameRepository;
 import it.manager.tournamentmanager.repositories.TeamRepository;
