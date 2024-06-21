@@ -97,8 +97,14 @@ public class UserService {
         if (userRequestBody.getAvatarUrl() != null) {
             userToUpdate.setAvatarUrl(userRequestBody.getAvatarUrl());
         }
-        if (userRequestBody.getUserRole() != null) {
-            userToUpdate.setUserRole(userRequestBody.getUserRole());
+        if (userRequestBody.getPreferredRole() != null){
+            userToUpdate.setPreferredRole(userRequestBody.getPreferredRole());
+        }
+        if (userRequestBody.getNationality() != null){
+            userToUpdate.setNationality(userRequestBody.getNationality());
+        }
+        if (userRequestBody.getLikedGames() != null){
+            userToUpdate.setLikedGames(userRequestBody.getLikedGames());
         }
     }
 
