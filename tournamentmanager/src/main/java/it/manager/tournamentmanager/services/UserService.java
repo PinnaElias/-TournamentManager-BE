@@ -106,9 +106,10 @@ public class UserService {
         if (userRequestBody.getLikedGames() != null){
             userToUpdate.setLikedGames(userRequestBody.getLikedGames());
         }
-        if (userRequestBody.getMvpCount() != 0){
+        if (userRequestBody.getMvpCount() >= 0) {
             userToUpdate.setMvpCount(userRequestBody.getMvpCount());
         }
+
     }
 
     public void setUserFieldsForDeletion(User userToCreate, User userRequestBody) {
