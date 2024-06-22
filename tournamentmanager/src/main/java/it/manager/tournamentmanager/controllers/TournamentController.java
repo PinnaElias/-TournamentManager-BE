@@ -86,4 +86,12 @@ public class TournamentController {
         return ResponseEntity.ok(updatedTournament);
     }
 
+    @PostMapping("/{tournamentId}/set-winner/{winnerTeamId}")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    public ResponseEntity<Tournament> setWinner(
+            @PathVariable UUID tournamentId,
+            @PathVariable UUID winnerTeamId) {
+        Tournament updatedTournament = tournamentService.setWinner(tournamentId, winnerTeamId);
+        return ResponseEntity.ok(updatedTournament);
+    }
 }
