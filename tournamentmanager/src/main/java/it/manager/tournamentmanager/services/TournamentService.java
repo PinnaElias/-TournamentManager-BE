@@ -9,6 +9,7 @@ import it.manager.tournamentmanager.repositories.TournamentRepository;
 import it.manager.tournamentmanager.requests.create.CreateTournamentRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateTournamentRequestBody;
 import it.manager.tournamentmanager.responses.DeleteTournamentResponseBody;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -94,6 +95,24 @@ public class TournamentService {
         }
 
         tournament.getLosers().add(team);
+        return tournamentRepo.save(tournament);
+    }
+
+    @Transactional
+    public Tournament setWinner(UUID tournamentId, UUID winnerTeamId) {
+        Tournament tournament = tournamentRepo.findById(tournamentId)
+                .orElseThrow(() -> new RuntimeException("Tournament not found with id: " + tournamentId));
+
+        Team winnerTeam = teamRepo.findById(winnerTeamId)
+                .orElseThrow(() -> new RuntimeException("Team not found with id: " + winnerTeamId));
+        if (!tournament.getParticipants().contains(winnerTeam)) {
+            throw new RuntimeException("The team with id " + winnerTeamId + " is not a participant in the tournament with id " + tournamentId);
+        }
+        if (tournament.getWinner() != null) {
+            throw new RuntimeException("A winner is already set for the tournament with id " + tournamentId);
+        }
+        tournament.setWinner(winnerTeam);
+
         return tournamentRepo.save(tournament);
     }
 

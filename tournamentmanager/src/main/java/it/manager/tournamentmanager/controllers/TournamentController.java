@@ -85,4 +85,5 @@ public class TournamentController {
         Tournament updatedTournament = tournamentService.addLoserTeamToTournament(tournamentId, teamId);
         return ResponseEntity.ok(updatedTournament);
     }
+
 }
