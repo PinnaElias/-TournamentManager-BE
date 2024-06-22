@@ -21,21 +21,17 @@ public class CreateTournamentRequestBody {
     @URL
     private String avatar;
 
-    @NotBlank(message = "Game must be set.")
     private Game game;
 
     @NotBlank(message = "name cannot be empty.")
     private String name;
 
     private List<Team> participants;
-
-    @NotBlank(message = "Select a bracket type.")
     private Bracket bracket;
 
-    @NotEmpty(message = "If it's a new tournament, select PLANNED.")
     private MatchState tournamentState;
 
-    @NotEmpty(message = "Are you the tournament manager?")
+//    @NotEmpty(message = "Are you the tournament manager?")
     private User tournamentManager;
 
     @NotBlank(message = "Please provide a brief description")
@@ -43,12 +39,11 @@ public class CreateTournamentRequestBody {
 
     private String prize;
 
-    @NotBlank(message = "Starting date must be set.")
+//    @NotBlank(message = "Starting date must be set.")
     private LocalDate startingDate;
 
     private LocalDate endingDate;
 
-    @NotBlank(message = "Starting time must be set.")
     private LocalTime startingTime;
 
 }
