@@ -15,6 +15,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -49,8 +51,35 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return new AntPathMatcher().match("/api/auth/**", request.getServletPath());
-    }
+//    @Override
+//    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+//        return new AntPathMatcher().match("/api/auth/**", request.getServletPath());
+//        return new AntPathMatcher().match("/api/auth/**", request.getServletPath());
+//    }
+
+    private static final List<String> EXCLUDE_URLS = Arrays.asList(
+        "/api/auth/**",
+        "/api/tournaments"
+//      aggiungere tra virgolette eventuali altri endpoint da escludere
+);
+
+@Override
+protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    String path = request.getRequestURI();
+    return EXCLUDE_URLS.stream().anyMatch(path::startsWith);
 }
+}
+
+//private static final List<String> EXCLUDE_URLS = Arrays.asList(
+//        "/excluded-url-1",
+//        "/excluded-url-2",
+//        "/excluded-url-3"
+//);
+
+//@Override
+//protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+//    String path = request.getRequestURI();
+//    return EXCLUDE_URLS.stream().anyMatch(path::startsWith);
+//}
+
+//salva token su localstorage e immetti come variabile in header authorization "Bearer {token}

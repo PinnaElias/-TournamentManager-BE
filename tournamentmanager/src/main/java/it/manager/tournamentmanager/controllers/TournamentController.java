@@ -40,7 +40,7 @@ public class TournamentController {
     }
 
     @GetMapping("/game/{gameId}")
-    public ResponseEntity<List<Tournament>> getTournamentsByGame(@PathVariable UUID gameId) {
+    public ResponseEntity<List<Tournament>> getAllTournamentsByGame(@PathVariable UUID gameId) {
         List<Tournament> tournaments = tournamentService.findAllTournamentsByGame(gameId);
         return ResponseEntity.ok(tournaments);
     }
