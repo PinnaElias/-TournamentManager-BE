@@ -31,7 +31,6 @@ public class CreateTournamentRequestBody {
 
     private MatchState tournamentState;
 
-//    @NotEmpty(message = "Are you the tournament manager?")
     private User tournamentManager;
 
     @NotBlank(message = "Please provide a brief description")
@@ -39,7 +38,6 @@ public class CreateTournamentRequestBody {
 
     private String prize;
 
-//    @NotBlank(message = "Starting date must be set.")
     private LocalDate startingDate;
 
     private LocalDate endingDate;

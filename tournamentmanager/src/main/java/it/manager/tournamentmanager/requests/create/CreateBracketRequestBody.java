@@ -10,11 +10,8 @@ import java.util.List;
 
 @Data
 public class CreateBracketRequestBody {
-
     @NotBlank(message = "Define the bracket type!")
     private BracketType bracketType;
     private Tournament tournament;
-
     private List<Team> participants;
-
 }
