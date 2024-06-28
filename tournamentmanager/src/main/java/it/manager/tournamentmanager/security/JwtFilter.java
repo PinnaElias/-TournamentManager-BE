@@ -28,7 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private UserService userService;
 
     private static final List<String> EXCLUDE_URLS = Arrays.asList(
-            "/api/auth/login", // Assicurati che questo corrisponda all'endpoint di login
+            "/api/auth/login",
             "/api/tournaments"
     );
 
