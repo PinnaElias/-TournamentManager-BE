@@ -37,7 +37,8 @@ public class TeamService {
     }
 
     public Team retrieveTeamById(UUID teamId) {
-        return teamRepo.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found with name: " + teamId));
+        return teamRepo.findById(teamId)
+                .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
     }
 
     public List<Team> findAllTeamsByGame(UUID gameId) {
@@ -46,10 +47,9 @@ public class TeamService {
         return teamRepo.findAllByGame(game);
     }
 
-    public Team addTeam(CreateTeamRequestBody teamRequestBody){
+    public Team addTeam(CreateTeamRequestBody teamRequestBody) {
         Team teamToCreate = new Team();
         setTeamFields(teamToCreate, teamRequestBody);
-
         return teamRepo.save(teamToCreate);
     }
 
@@ -60,81 +60,64 @@ public class TeamService {
                 .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
 
         team.getMembers().add(user);
+        user.setTeam(team);
+        userRepo.save(user);
         return teamRepo.save(team);
     }
 
-    public Team editTeam(UUID teamId, UpdateTeamRequestBody teamRequestBody){
+    public Team editTeam(UUID teamId, UpdateTeamRequestBody teamRequestBody) {
         Team teamToUpdate = teamRepo.findById(teamId)
-                .orElseThrow(()-> new RuntimeException("Team not found with id: " + teamId));
+                .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
         updateTeamFields(teamToUpdate, teamRequestBody);
-
         return teamRepo.save(teamToUpdate);
     }
 
-    public DeleteTeamResponseBody removeTeam(UUID teamId){
+    public DeleteTeamResponseBody removeTeam(UUID teamId) {
         Team teamToDelete = teamRepo.findById(teamId)
-                .orElseThrow(()-> new RuntimeException("Team not found with id: " + teamId));
-        Team teamToShow = new Team();
-        setTeamFieldsForDeletion(teamToShow, teamToDelete);
-        System.out.println(teamToShow);
-
-        return new DeleteTeamResponseBody("Team deleted successfully", teamToShow);
-    }
-
-
-    /**
-     * HELPER
-     *
-     * @param teamToCreate
-     * @param teamRequestBody
-     */
-
-    public void setTeamFields(Team teamToCreate, CreateTeamRequestBody teamRequestBody) {
-        teamToCreate.setName(teamRequestBody.getName());
-        teamToCreate.setMembers(teamRequestBody.getMembers());
-        teamToCreate.setGame(teamRequestBody.getGame());
-        teamToCreate.setAvatar(teamRequestBody.getAvatar());
-        teamToCreate.setNationality(teamRequestBody.getNationality());
-    }
-
-    public void setTeamFieldsForDeletion(Team teamToCreate, Team teamRequestBody) {
-        teamToCreate.setName(teamRequestBody.getName());
-        teamToCreate.setMembers(teamRequestBody.getMembers());
-        teamToCreate.setGame(teamRequestBody.getGame());
-        teamToCreate.setAvatar(teamRequestBody.getAvatar());
-        teamToCreate.setNationality(teamRequestBody.getNationality());
-        teamToCreate.setActiveTournaments(teamRequestBody.getActiveTournaments());
-        teamToCreate.setTournamentsHistory(teamRequestBody.getTournamentsHistory());
+                .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
+        teamRepo.delete(teamToDelete);
+        return new DeleteTeamResponseBody("Team deleted successfully", teamToDelete);
     }
 
     /**
      * HELPER
      *
-     * @param teamToUpdate
+     * @param team
      * @param teamRequestBody
      */
+    private void setTeamFields(Team team, CreateTeamRequestBody teamRequestBody) {
+        team.setName(teamRequestBody.getName());
+        team.setMembers(teamRequestBody.getMembers());
+        team.setGame(teamRequestBody.getGame());
+        team.setAvatar(teamRequestBody.getAvatar());
+        team.setNationality(teamRequestBody.getNationality());
+    }
 
-    public void updateTeamFields(Team teamToUpdate, UpdateTeamRequestBody teamRequestBody) {
+    private void updateTeamFields(Team team, UpdateTeamRequestBody teamRequestBody) {
         if (teamRequestBody.getName() != null) {
-            teamToUpdate.setName(teamRequestBody.getName());
+            team.setName(teamRequestBody.getName());
         }
         if (teamRequestBody.getMembers() != null) {
-            teamToUpdate.setMembers(teamRequestBody.getMembers());
+            for (User user : teamRequestBody.getMembers()) {
+                user.setTeam(team);
+                userRepo.save(user);
+            }
+            team.setMembers(teamRequestBody.getMembers());
         }
         if (teamRequestBody.getGame() != null) {
-            teamToUpdate.setGame(teamRequestBody.getGame());
+            team.setGame(teamRequestBody.getGame());
         }
         if (teamRequestBody.getAvatar() != null) {
-            teamToUpdate.setAvatar(teamRequestBody.getAvatar());
+            team.setAvatar(teamRequestBody.getAvatar());
         }
         if (teamRequestBody.getNationality() != null) {
-            teamToUpdate.setNationality(teamRequestBody.getNationality());
+            team.setNationality(teamRequestBody.getNationality());
         }
         if (teamRequestBody.getActiveTournaments() != null) {
-            teamToUpdate.setActiveTournaments(teamRequestBody.getActiveTournaments());
+            team.setActiveTournaments(teamRequestBody.getActiveTournaments());
         }
         if (teamRequestBody.getTournamentsHistory() != null) {
-            teamToUpdate.setTournamentsHistory(teamRequestBody.getTournamentsHistory());
+            team.setTournamentsHistory(teamRequestBody.getTournamentsHistory());
         }
     }
 }

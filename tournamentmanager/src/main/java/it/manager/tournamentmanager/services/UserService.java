@@ -1,6 +1,8 @@
 package it.manager.tournamentmanager.services;
 
+import it.manager.tournamentmanager.entities.Team;
 import it.manager.tournamentmanager.entities.User;
+import it.manager.tournamentmanager.repositories.TeamRepository;
 import it.manager.tournamentmanager.repositories.UserRepository;
 import it.manager.tournamentmanager.requests.create.CreateUserRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateUserRequestBody;
@@ -23,6 +25,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private TeamRepository teamRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -74,7 +79,6 @@ public class UserService {
         return  new DeleteUserResponseBody("User deleted successfully", userToShow);
     }
 
-
     public void setUserFields(User userToCreate, CreateUserRequestBody userRequestBody) {
         userToCreate.setUsername(userRequestBody.getUsername());
         userToCreate.setEmail(userRequestBody.getEmail());
@@ -119,7 +123,17 @@ public class UserService {
         if (userRequestBody.getMvpCount() >= 0) {
             userToUpdate.setMvpCount(userRequestBody.getMvpCount());
         }
+        if (userRequestBody.getTeam() != null) {
+            Team team = teamRepo.findById(userRequestBody.getTeam().getId())
+                    .orElseThrow(() -> new RuntimeException("Team not found with id: " + userRequestBody.getTeam().getId()));
+            userToUpdate.setTeam(team);
 
+            // Aggiorna i membri del team
+            if (!team.getMembers().contains(userToUpdate)) {
+                team.getMembers().add(userToUpdate);
+                teamRepo.save(team);
+            }
+        }
     }
 
     public void setUserFieldsForDeletion(User userToCreate, User userRequestBody) {
