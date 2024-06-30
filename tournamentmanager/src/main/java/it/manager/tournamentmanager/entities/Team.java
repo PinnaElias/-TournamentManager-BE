@@ -1,5 +1,6 @@
 package it.manager.tournamentmanager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,7 +28,7 @@ public class Team {
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "tournament_id")
     )
-    private List<Tournament> activeTournaments;;
+    private List<Tournament> activeTournaments;
 
     @ManyToMany
     @JoinTable(
@@ -37,12 +38,9 @@ public class Team {
     )
     private List<Tournament> tournamentsHistory;
 
-    @ManyToMany
-    @JoinTable(
-            name = "team_members",
-            joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @OneToMany(mappedBy = "team")
+    @JsonIgnoreProperties("team")
     private List<User> members;
+
     private String nationality;
 }

@@ -1,5 +1,6 @@
 package it.manager.tournamentmanager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.manager.tournamentmanager.entities.enums.Role;
 import it.manager.tournamentmanager.entities.enums.UserRole;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "users")
-public class User implements UserDetails{
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     private UUID id;
@@ -44,10 +45,12 @@ public class User implements UserDetails{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "game_id")
     )
+    @JsonIgnoreProperties("users")
     private List<Game> likedGames;
 
     @ManyToOne
     @JoinColumn(name = "team_id")
+    @JsonIgnoreProperties("members")
     private Team team;
 
     @Enumerated(EnumType.STRING)
