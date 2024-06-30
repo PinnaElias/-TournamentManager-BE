@@ -32,7 +32,5 @@ public class CreateUserRequestBody {
 
     @NotBlank(message = "avatar url cannot be empty")
     private String avatarUrl;
-
     private UserRole userRole;
-
 }

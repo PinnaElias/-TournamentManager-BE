@@ -60,5 +60,4 @@ public class ConfigurationClass {
 
         return httpSecurity.build();
     }
-
 }

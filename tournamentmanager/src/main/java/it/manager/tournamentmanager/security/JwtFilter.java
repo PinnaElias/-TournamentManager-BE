@@ -29,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private static final List<String> EXCLUDE_URLS = Arrays.asList(
             "/api/auth/login",
+            "/api/auth/register",
             "/api/tournaments"
     );
 
