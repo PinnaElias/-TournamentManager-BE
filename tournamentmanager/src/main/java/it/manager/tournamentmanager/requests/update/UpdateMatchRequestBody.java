@@ -12,24 +12,16 @@ import java.time.LocalTime;
 
 @Data
 public class UpdateMatchRequestBody {
-
     private LocalDate startingDate;
     private LocalTime startingTime;
-
     private Team teamASide;
     private Team teamBSide;
-
     private int teamAScore;
     private int teamBScore;
-
     @Enumerated(EnumType.STRING)
     private MatchState matchState;
-
     private Tournament tournament;
-
     private Bracket bracket;
-
     private Team winner;
-
     private Team loser;
 }
