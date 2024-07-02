@@ -1,6 +1,7 @@
 package it.manager.tournamentmanager.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,6 +26,10 @@ public class Game {
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    @JsonBackReference
+    @JsonIgnoreProperties("subscribedGames")
     private List<User> subscribers;
+
+    @OneToMany(mappedBy = "game")
+    @JsonIgnoreProperties("game")  // Ignora la proprietà ricorsiva
+    private List<Tournament> tournaments;
 }

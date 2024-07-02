@@ -1,5 +1,6 @@
 package it.manager.tournamentmanager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.manager.tournamentmanager.entities.enums.MatchState;
 import jakarta.persistence.*;
@@ -22,7 +23,7 @@ public class Tournament {
 
     @ManyToOne
     @JoinColumn(name = "game_id")
-    @JsonManagedReference
+    @JsonIgnoreProperties("tournaments")
     private Game game;
 
     private String name;
@@ -33,10 +34,12 @@ public class Tournament {
             joinColumns = @JoinColumn(name = "tournament_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
+    @JsonIgnoreProperties("tournaments")
     private List<Team> participants;
 
     @OneToOne
     @JoinColumn(name = "bracket_id")
+    @JsonIgnoreProperties("tournaments")
     private Bracket bracket;
 
     @Enumerated(EnumType.STRING)
@@ -63,6 +66,7 @@ public class Tournament {
             joinColumns = @JoinColumn(name = "tournament_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
+    @JsonIgnoreProperties("tournaments")
     private List<Team> losers;
 
 }
