@@ -1,5 +1,6 @@
 package it.manager.tournamentmanager.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.manager.tournamentmanager.entities.enums.MatchState;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Tournament {
 
     @ManyToOne
     @JoinColumn(name = "game_id")
+    @JsonManagedReference
     private Game game;
 
     private String name;
@@ -52,12 +54,9 @@ public class Tournament {
     private LocalDate endingDate;
     @Column(name = "starting_time")
     private LocalTime startingTime;
-
     @OneToOne
     @JoinColumn(name = "winner_id")
     private Team winner;
-
-
     @ManyToMany
     @JoinTable(
             name = "tournament_losers",
