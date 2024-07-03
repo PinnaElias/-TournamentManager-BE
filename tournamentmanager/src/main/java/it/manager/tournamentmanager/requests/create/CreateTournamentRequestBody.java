@@ -17,31 +17,19 @@ import java.util.List;
 
 @Data
 public class CreateTournamentRequestBody {
-
     @URL
     private String avatar;
-
     private Game game;
-
     @NotBlank(message = "name cannot be empty.")
     private String name;
-
     private List<Team> participants;
     private Bracket bracket;
-
     private MatchState tournamentState;
-
     private User tournamentManager;
-
     @NotBlank(message = "Please provide a brief description")
     private String description;
-
     private String prize;
-
     private LocalDate startingDate;
-
     private LocalDate endingDate;
-
     private LocalTime startingTime;
-
 }
