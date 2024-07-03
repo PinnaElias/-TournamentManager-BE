@@ -5,9 +5,7 @@ import it.manager.tournamentmanager.entities.Game;
 import it.manager.tournamentmanager.entities.Team;
 import it.manager.tournamentmanager.entities.User;
 import it.manager.tournamentmanager.entities.enums.MatchState;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 

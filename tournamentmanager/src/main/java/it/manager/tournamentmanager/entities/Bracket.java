@@ -10,17 +10,13 @@ import java.util.UUID;
 @Data
 @Entity
 public class Bracket {
-
     @Id
     @GeneratedValue
     private UUID id;
-
     @Enumerated(EnumType.STRING)
     private BracketType bracketType;
-
     @OneToOne(mappedBy = "bracket")
     private Tournament tournament;
-
     @ManyToMany
     @JoinTable(
             name = "bracket_participants",
@@ -28,11 +24,9 @@ public class Bracket {
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
     private List<Team> participants;
-
     @OneToOne
     @JoinColumn(name = "winner_id")
     private Team winner;
-
     @ManyToMany
     @JoinTable(
             name = "bracket_losers",

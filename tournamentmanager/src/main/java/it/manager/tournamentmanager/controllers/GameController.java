@@ -36,20 +36,17 @@ public class GameController {
         Game game = gameService.retrieveGameById(id);
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
-
     @GetMapping("/name/{name}")
     public ResponseEntity<Game> getGameByName(@PathVariable String name) {
         Game game = gameService.retrieveGameByName(name);
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
-
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Game> createGame(@RequestBody CreateGameRequestBody gameRequestBody) {
         Game game = gameService.addGame(gameRequestBody);
         return new ResponseEntity<>(game, HttpStatus.CREATED);
     }
-
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Game> updateGame(
@@ -58,7 +55,6 @@ public class GameController {
         Game updatedGame = gameService.editGame(id, gameRequestBody);
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<DeleteGameResponseBody> deleteGame(@PathVariable UUID id) {
