@@ -15,9 +15,11 @@ public class Team {
     private UUID id;
     private String name;
     private String avatar;
+
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
+
     @ManyToMany
     @JoinTable(
             name = "team_active_tournaments",

@@ -3,6 +3,7 @@ package it.manager.tournamentmanager.services;
 import it.manager.tournamentmanager.entities.Game;
 import it.manager.tournamentmanager.entities.Team;
 import it.manager.tournamentmanager.entities.User;
+import it.manager.tournamentmanager.exceptions.ResourceNotFoundException;
 import it.manager.tournamentmanager.repositories.GameRepository;
 import it.manager.tournamentmanager.repositories.TeamRepository;
 import it.manager.tournamentmanager.repositories.UserRepository;
@@ -105,7 +106,8 @@ public class TeamService {
             team.setMembers(teamRequestBody.getMembers());
         }
         if (teamRequestBody.getGame() != null) {
-            team.setGame(teamRequestBody.getGame());
+            Game gameToAdd = gameRepo.findById(teamRequestBody.getGame()).orElseThrow(() -> new ResourceNotFoundException("Game not found"));;
+            team.setGame(gameToAdd);
         }
         if (teamRequestBody.getAvatar() != null) {
             team.setAvatar(teamRequestBody.getAvatar());

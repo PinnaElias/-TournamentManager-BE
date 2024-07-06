@@ -29,12 +29,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private static final List<String> EXCLUDE_URLS = Arrays.asList(
             "/api/auth/login",
-            "/api/auth/register",
-            "/api/tournaments"
+            "/api/auth/register"
     );
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         if (shouldNotFilter(request)) {
             filterChain.doFilter(request, response);
             return;
@@ -53,8 +53,9 @@ public class JwtFilter extends OncePerRequestFilter {
         UUID id = jwtTool.getIdFromUser(token);
 
         User user = userService.retrieveUserById(id);
-
+        System.out.println(user);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        System.out.println(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);

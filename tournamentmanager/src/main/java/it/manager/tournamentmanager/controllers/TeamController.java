@@ -48,9 +48,11 @@ public class TeamController {
         return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 
+
     @PostMapping
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Team> createTeam(@RequestBody CreateTeamRequestBody teamRequestBody) {
+        System.out.println("Received request body: " + teamRequestBody);
         Team team = teamService.addTeam(teamRequestBody);
         return new ResponseEntity<>(team, HttpStatus.CREATED);
     }

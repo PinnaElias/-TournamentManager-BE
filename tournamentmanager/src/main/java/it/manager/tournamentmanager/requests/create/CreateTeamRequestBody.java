@@ -15,7 +15,6 @@ import java.util.List;
 
 @Data
 public class CreateTeamRequestBody {
-
     @NotBlank(message = "Choose a name!")
     private String name;
     @URL

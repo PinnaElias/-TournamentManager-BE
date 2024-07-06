@@ -124,15 +124,15 @@ public class TournamentService {
      */
 
     public void setTournamentFields(Tournament tournamentToCreate, CreateTournamentRequestBody tournamentRequestBody) {
-        tournamentToCreate.setAvatar(tournamentRequestBody.getAvatar());
-        tournamentToCreate.setGame(tournamentRequestBody.getGame());
-        tournamentToCreate.setName(tournamentRequestBody.getName());
-        tournamentToCreate.setBracket(tournamentRequestBody.getBracket());
-        tournamentToCreate.setTournamentState(tournamentRequestBody.getTournamentState());
-        tournamentToCreate.setDescription(tournamentRequestBody.getDescription());
-        tournamentToCreate.setPrize(tournamentRequestBody.getPrize());
-        tournamentToCreate.setEndingDate(tournamentRequestBody.getEndingDate());
-        tournamentToCreate.setParticipants(tournamentRequestBody.getParticipants());
+        tournamentToCreate.setAvatar(tournamentRequestBody.avatar());
+//        tournamentToCreate.setGame(tournamentRequestBody.game());
+        tournamentToCreate.setName(tournamentRequestBody.name());
+//        tournamentToCreate.setBracket(tournamentRequestBody.getBracket());
+//        tournamentToCreate.setTournamentState(tournamentRequestBody.getTournamentState());
+        tournamentToCreate.setDescription(tournamentRequestBody.description());
+        tournamentToCreate.setPrize(tournamentRequestBody.prize());
+        tournamentToCreate.setEndingDate(tournamentRequestBody.endingDate());
+//        tournamentToCreate.setParticipants(tournamentRequestBody.participants());
     }
 
     public void setTournamentFieldsForDeletion(Tournament tournamentToCreate, Tournament tournamentRequestBody) {
