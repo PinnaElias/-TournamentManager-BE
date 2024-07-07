@@ -1,6 +1,8 @@
 package it.manager.tournamentmanager.controllers;
 
 import it.manager.tournamentmanager.entities.Team;
+import it.manager.tournamentmanager.entities.User;
+import it.manager.tournamentmanager.exceptions.UnauthorizedException;
 import it.manager.tournamentmanager.requests.create.CreateTeamRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateTeamRequestBody;
 import it.manager.tournamentmanager.responses.DeleteTeamResponseBody;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,16 +62,32 @@ public class TeamController {
 
     @PutMapping("/{teamId}/addUser/{userId}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    public ResponseEntity<Team> addUserToTeam(@PathVariable UUID teamId, @PathVariable UUID userId) {
-        Team team = teamService.addUserToTeam(teamId, userId);
-        return new ResponseEntity<>(team, HttpStatus.OK);
+    public ResponseEntity<Team> addUserToTeam(@PathVariable UUID teamId,
+                                              @PathVariable UUID userId,
+                                              @AuthenticationPrincipal User me) {
+        UUID myTeamId = me.getTeam() != null ? me.getTeam().getId() : null;
+
+        if (myTeamId == null) {
+            // Se l'utente non è in nessun team, chiama il servizio con teamId e userId
+            Team team = teamService.addUserToTeam(teamId, me.getId());
+            return new ResponseEntity<>(team, HttpStatus.OK);
+        } else if (!myTeamId.equals(teamId)) {
+            // Se l'utente è in un team, controlla se l'ID del team corrente è diverso da teamId
+            Team team = teamService.addUserToTeam(teamId, myTeamId);
+            return new ResponseEntity<>(team, HttpStatus.OK);
+        } else {
+            // Se l'utente è già nel team, l'operazione è vietata
+            throw new UnauthorizedException("You are already in this team!");
+        }
     }
+
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<Team> updateTeam(
             @PathVariable UUID id,
             @RequestBody UpdateTeamRequestBody teamRequestBody) {
+
         Team updatedTeam = teamService.editTeam(id, teamRequestBody);
         return new ResponseEntity<>(updatedTeam, HttpStatus.OK);
     }
