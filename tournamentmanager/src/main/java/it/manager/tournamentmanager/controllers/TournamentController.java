@@ -1,7 +1,6 @@
 package it.manager.tournamentmanager.controllers;
 
 import it.manager.tournamentmanager.entities.*;
-import it.manager.tournamentmanager.exceptions.ResourceNotFoundException;
 import it.manager.tournamentmanager.repositories.BracketRepository;
 import it.manager.tournamentmanager.repositories.GameRepository;
 import it.manager.tournamentmanager.repositories.TeamRepository;
@@ -9,7 +8,6 @@ import it.manager.tournamentmanager.repositories.UserRepository;
 import it.manager.tournamentmanager.requests.create.CreateTournamentRequestBody;
 import it.manager.tournamentmanager.requests.update.UpdateTournamentRequestBody;
 import it.manager.tournamentmanager.responses.DeleteTournamentResponseBody;
-import it.manager.tournamentmanager.services.GameService;
 import it.manager.tournamentmanager.services.TournamentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,24 +67,10 @@ public class TournamentController {
     public ResponseEntity<Tournament> addTournament(@RequestBody CreateTournamentRequestBody tournamentRequestBody,
                                                     @AuthenticationPrincipal User me) {
 
-        //passati TUTTO COME ID
-
         Tournament tournament = new Tournament();
+//      Segue la conversione degli Id in entità
 
-        // Convert UUIDs to entities
-//        Game game = gameRepo.findById(tournamentRequestBody.game())
-//                .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
         List<Team> participants = teamRepo.findAllById(tournamentRequestBody.participants());
-
-//        Bracket bracket = bracketRepo.findAllById(tournamentRequestBody.bracket())
-//                .orElseThrow(() -> new ResourceNotFoundException("Bracket not found"));
-
-
-//        User tournamentManager = userRepo.findById(tournamentRequestBody.tournamentManager())
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        System.out.println("Pasta Barilla");
-
-        // Set values to the tournament entity
         tournament.setAvatar(tournamentRequestBody.avatar());
         tournament.setGame(tournamentRequestBody.game());
         tournament.setName(tournamentRequestBody.name());
@@ -99,8 +83,8 @@ public class TournamentController {
         tournament.setStartingDate(tournamentRequestBody.startingDate());
         tournament.setEndingDate(tournamentRequestBody.endingDate());
         tournament.setStartingTime(tournamentRequestBody.startingTime());
+//        Strumento di debug
 //        System.out.println("Request Body: " + tournamentRequestBody);
-
         Tournament createdTournament = tournamentService.addTournament(tournamentRequestBody);
         return new ResponseEntity<>(createdTournament, HttpStatus.CREATED);
     }

@@ -32,7 +32,7 @@ public class JwtTool {
                 .build().parse(token);
     }
 
-    public UUID getIdFromUser(String token){
+    public UUID getIdFromUser(String token) {
         return UUID.fromString(Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).
                 build().parseSignedClaims(token).getPayload().getSubject());
     }

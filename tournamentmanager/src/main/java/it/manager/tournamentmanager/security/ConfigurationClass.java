@@ -30,7 +30,6 @@ public class ConfigurationClass {
         corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
 
@@ -48,7 +47,6 @@ public class ConfigurationClass {
         httpSecurity.csrf(http -> http.disable());
         httpSecurity.sessionManagement(http -> http.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.cors(Customizer.withDefaults());
-
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/api/**").permitAll());
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers( HttpMethod.POST,"/auth/**").permitAll());
 //    httpSecurity.authorizeHttpRequests(http->http.anyRequest().authenticated());

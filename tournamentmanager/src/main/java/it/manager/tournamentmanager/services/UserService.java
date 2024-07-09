@@ -42,7 +42,7 @@ public class UserService {
     }
 
     public User retrieveByEmail(String email) {
-        return userRepo.findByEmail(email).orElseThrow( () -> new RuntimeException("User not found with email: " + email));
+        return userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found with email: " + email));
     }
 
     public User retrieveCurrentUser() {
@@ -76,7 +76,7 @@ public class UserService {
         userRepo.delete(userToDelete);
         System.out.println(userToShow);
 
-        return  new DeleteUserResponseBody("User deleted successfully", userToShow);
+        return new DeleteUserResponseBody("User deleted successfully", userToShow);
     }
 
     public void setUserFields(User userToCreate, CreateUserRequestBody userRequestBody) {
@@ -111,13 +111,13 @@ public class UserService {
         if (userRequestBody.getAvatarUrl() != null) {
             userToUpdate.setAvatarUrl(userRequestBody.getAvatarUrl());
         }
-        if (userRequestBody.getPreferredRole() != null){
+        if (userRequestBody.getPreferredRole() != null) {
             userToUpdate.setPreferredRole(userRequestBody.getPreferredRole());
         }
-        if (userRequestBody.getNationality() != null){
+        if (userRequestBody.getNationality() != null) {
             userToUpdate.setNationality(userRequestBody.getNationality());
         }
-        if (userRequestBody.getLikedGames() != null){
+        if (userRequestBody.getLikedGames() != null) {
             userToUpdate.setLikedGames(userRequestBody.getLikedGames());
         }
         if (userRequestBody.getMvpCount() >= 0) {

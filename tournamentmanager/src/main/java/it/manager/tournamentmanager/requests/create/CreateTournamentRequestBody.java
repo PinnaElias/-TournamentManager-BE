@@ -1,13 +1,8 @@
 package it.manager.tournamentmanager.requests.create;
 
-import it.manager.tournamentmanager.entities.Bracket;
 import it.manager.tournamentmanager.entities.Game;
-import it.manager.tournamentmanager.entities.Team;
-import it.manager.tournamentmanager.entities.User;
-import it.manager.tournamentmanager.entities.enums.BracketType;
 import it.manager.tournamentmanager.entities.enums.MatchState;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
@@ -22,7 +17,6 @@ public record CreateTournamentRequestBody(
         @NotBlank(message = "name cannot be empty.")
         String name,
         List<UUID> participants,
-//ritocca anche il service
         UUID bracket,
         MatchState tournamentState,
         UUID tournamentManager,

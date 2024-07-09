@@ -25,24 +25,24 @@ public class GameService {
         return gameRepo.findAll(pageable);
     }
 
-    public Game retrieveGameById(UUID gameId){
+    public Game retrieveGameById(UUID gameId) {
         return gameRepo.findById(gameId).orElseThrow(() -> new RuntimeException("Game with id: " + gameId + "not found"));
     }
 
-    public Game retrieveGameByName(String name){
+    public Game retrieveGameByName(String name) {
         return gameRepo.retrieveGameByName(name).orElseThrow(() -> new RuntimeException(name + "doesn't exists"));
     }
 
-    public Game addGame(CreateGameRequestBody gameRequestBody){
+    public Game addGame(CreateGameRequestBody gameRequestBody) {
         Game gameToCreate = new Game();
         setGameFields(gameToCreate, gameRequestBody);
 
         return gameRepo.save(gameToCreate);
     }
 
-    public DeleteGameResponseBody removeGame(UUID gameId){
+    public DeleteGameResponseBody removeGame(UUID gameId) {
         Game gameToDelete = gameRepo.findById(gameId)
-                .orElseThrow(()-> new RuntimeException("Game not found with Id:" + gameId));
+                .orElseThrow(() -> new RuntimeException("Game not found with Id:" + gameId));
         Game gameToShow = new Game();
         setGameFieldsForDeletion(gameToShow, gameToDelete);
         gameRepo.delete(gameToDelete);
@@ -52,35 +52,35 @@ public class GameService {
     }
 
 
-
-    public Game editGame(UUID gameId, UpdateGameRequestBody gameRequestBody){
+    public Game editGame(UUID gameId, UpdateGameRequestBody gameRequestBody) {
         Game gameToUpdate = gameRepo.findById(gameId)
-                .orElseThrow(()-> new RuntimeException("Game not found with Id:" + gameId));
+                .orElseThrow(() -> new RuntimeException("Game not found with Id:" + gameId));
 
         updateGameFields(gameToUpdate, gameRequestBody);
         return gameRepo.save(gameToUpdate);
     }
 
-     /**
+    /**
      * HELPER
+     *
      * @param gameToUpdate
      * @param gameRequestBody
      */
 
-     public void updateGameFields(Game gameToUpdate, UpdateGameRequestBody gameRequestBody){
-         if (gameRequestBody.getName() != null){
-             gameToUpdate.setName(gameRequestBody.getName());
-         }
-         if (gameRequestBody.getAvatar() != null){
-             gameToUpdate.setAvatar(gameRequestBody.getAvatar());
-         }
-         if (gameRequestBody.getMaxPlayersNumberForTeam() != 0){
-             gameToUpdate.setMaxPlayersNumberForTeam(gameRequestBody.getMaxPlayersNumberForTeam());
-         }
-         if (gameRequestBody.getSubscribers() != null){
-             gameToUpdate.setSubscribers(gameRequestBody.getSubscribers());
-         }
-     }
+    public void updateGameFields(Game gameToUpdate, UpdateGameRequestBody gameRequestBody) {
+        if (gameRequestBody.getName() != null) {
+            gameToUpdate.setName(gameRequestBody.getName());
+        }
+        if (gameRequestBody.getAvatar() != null) {
+            gameToUpdate.setAvatar(gameRequestBody.getAvatar());
+        }
+        if (gameRequestBody.getMaxPlayersNumberForTeam() != 0) {
+            gameToUpdate.setMaxPlayersNumberForTeam(gameRequestBody.getMaxPlayersNumberForTeam());
+        }
+        if (gameRequestBody.getSubscribers() != null) {
+            gameToUpdate.setSubscribers(gameRequestBody.getSubscribers());
+        }
+    }
 
     /**
      * HELPER

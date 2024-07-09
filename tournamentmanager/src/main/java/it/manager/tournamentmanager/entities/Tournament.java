@@ -1,7 +1,6 @@
 package it.manager.tournamentmanager.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.manager.tournamentmanager.entities.enums.MatchState;
 import jakarta.persistence.*;
 import lombok.Data;

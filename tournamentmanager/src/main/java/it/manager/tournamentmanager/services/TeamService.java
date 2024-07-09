@@ -106,7 +106,7 @@ public class TeamService {
             team.setMembers(teamRequestBody.getMembers());
         }
         if (teamRequestBody.getGame() != null) {
-            Game gameToAdd = gameRepo.findById(teamRequestBody.getGame()).orElseThrow(() -> new ResourceNotFoundException("Game not found"));;
+            Game gameToAdd = gameRepo.findById(teamRequestBody.getGame()).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
             team.setGame(gameToAdd);
         }
         if (teamRequestBody.getAvatar() != null) {

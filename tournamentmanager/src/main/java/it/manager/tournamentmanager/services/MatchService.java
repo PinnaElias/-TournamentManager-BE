@@ -23,20 +23,20 @@ public class MatchService {
         return matchRepo.findAll(pageable);
     }
 
-    public Match retrieveMatchById(int matchId){
-    return matchRepo.findById(matchId).orElseThrow(() -> new RuntimeException("Match with id: " + matchId + "not found"));
+    public Match retrieveMatchById(int matchId) {
+        return matchRepo.findById(matchId).orElseThrow(() -> new RuntimeException("Match with id: " + matchId + "not found"));
     }
 
-    public Match addMatch(CreateMatchRequestBody matchRequestBody){
+    public Match addMatch(CreateMatchRequestBody matchRequestBody) {
         Match matchToCreate = new Match();
         setMatchFields(matchToCreate, matchRequestBody);
 
         return matchRepo.save(matchToCreate);
     }
 
-    public DeleteMatchResponseBody removeMatch(int matchId){
+    public DeleteMatchResponseBody removeMatch(int matchId) {
         Match matchToDelete = matchRepo.findById(matchId)
-                .orElseThrow(()-> new RuntimeException("Match not found with Id:" + matchId));
+                .orElseThrow(() -> new RuntimeException("Match not found with Id:" + matchId));
         Match matchToShow = new Match();
         setMatchFieldsForDeletion(matchToShow, matchToDelete);
         matchRepo.delete(matchToDelete);
@@ -45,9 +45,9 @@ public class MatchService {
         return new DeleteMatchResponseBody("Match Removed successfully", matchToShow);
     }
 
-    public Match editMatch(int matchId, UpdateMatchRequestBody matchRequestBody){
+    public Match editMatch(int matchId, UpdateMatchRequestBody matchRequestBody) {
         Match matchToUpdate = matchRepo.findById(matchId)
-                .orElseThrow(()-> new RuntimeException("Match not found with Id:" + matchId));
+                .orElseThrow(() -> new RuntimeException("Match not found with Id:" + matchId));
         updateMatchFields(matchToUpdate, matchRequestBody);
 
         return matchRepo.save(matchToUpdate);
@@ -60,7 +60,7 @@ public class MatchService {
      * @param matchRequestBody
      */
 
-    public void setMatchFields(Match matchToCreate, CreateMatchRequestBody matchRequestBody){
+    public void setMatchFields(Match matchToCreate, CreateMatchRequestBody matchRequestBody) {
         matchToCreate.setMatchState(matchRequestBody.getMatchState());
         matchToCreate.setTeamASide(matchRequestBody.getTeamASide());
         matchToCreate.setTeamBSide(matchRequestBody.getTeamBSide());
@@ -70,7 +70,7 @@ public class MatchService {
         matchToCreate.setStartingTime(matchRequestBody.getStartingTime());
     }
 
-    public void setMatchFieldsForDeletion(Match matchToCreate, Match matchRequestBody){
+    public void setMatchFieldsForDeletion(Match matchToCreate, Match matchRequestBody) {
         matchToCreate.setMatchState(matchRequestBody.getMatchState());
         matchToCreate.setTeamASide(matchRequestBody.getTeamASide());
         matchToCreate.setTeamBSide(matchRequestBody.getTeamBSide());
@@ -86,42 +86,43 @@ public class MatchService {
 
     /**
      * HELPER
+     *
      * @param matchToUpdate
      * @param matchRequestBody
      */
 
-    public void updateMatchFields(Match matchToUpdate, UpdateMatchRequestBody matchRequestBody){
-        if (matchRequestBody.getBracket() != null){
+    public void updateMatchFields(Match matchToUpdate, UpdateMatchRequestBody matchRequestBody) {
+        if (matchRequestBody.getBracket() != null) {
             matchToUpdate.setBracket(matchRequestBody.getBracket());
         }
-        if (matchRequestBody.getTournament() != null){
+        if (matchRequestBody.getTournament() != null) {
             matchToUpdate.setTournament(matchRequestBody.getTournament());
         }
-        if (matchRequestBody.getMatchState() != null){
+        if (matchRequestBody.getMatchState() != null) {
             matchToUpdate.setMatchState(matchRequestBody.getMatchState());
         }
-        if (matchRequestBody.getStartingTime() != null){
+        if (matchRequestBody.getStartingTime() != null) {
             matchToUpdate.setStartingTime(matchRequestBody.getStartingTime());
         }
-        if (matchRequestBody.getStartingDate() != null){
+        if (matchRequestBody.getStartingDate() != null) {
             matchToUpdate.setStartingDate(matchRequestBody.getStartingDate());
         }
-        if (matchRequestBody.getTeamASide() != null){
+        if (matchRequestBody.getTeamASide() != null) {
             matchToUpdate.setTeamASide(matchRequestBody.getTeamASide());
         }
-        if (matchRequestBody.getTeamBSide() != null){
+        if (matchRequestBody.getTeamBSide() != null) {
             matchToUpdate.setTeamBSide(matchRequestBody.getTeamBSide());
         }
-        if (matchRequestBody.getWinner() != null){
+        if (matchRequestBody.getWinner() != null) {
             matchToUpdate.setWinner(matchRequestBody.getWinner());
         }
-        if (matchRequestBody.getLoser() != null){
+        if (matchRequestBody.getLoser() != null) {
             matchToUpdate.setLoser(matchRequestBody.getLoser());
         }
-        if (matchRequestBody.getTeamAScore() != 0){
+        if (matchRequestBody.getTeamAScore() != 0) {
             matchToUpdate.setTeamAScore(matchRequestBody.getTeamAScore());
         }
-        if (matchRequestBody.getTeamBScore() != 0){
+        if (matchRequestBody.getTeamBScore() != 0) {
             matchToUpdate.setTeamBScore(matchRequestBody.getTeamBScore());
         }
     }

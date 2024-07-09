@@ -10,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -57,11 +55,11 @@ public class UserController {
     public ResponseEntity<User> updateUser(@RequestBody @Validated UpdateUserRequestBody userRequestBody,
                                            @PathVariable UUID id,
                                            BindingResult validation) throws BadRequestException {
-        if(validation.hasErrors()){
+        if (validation.hasErrors()) {
             throw new BadRequestException(validation.getAllErrors()
                     .stream()
                     .map(objectError -> objectError.getDefaultMessage())
-                    .reduce("", (acc, curr) -> acc+curr));
+                    .reduce("", (acc, curr) -> acc + curr));
         }
         return new ResponseEntity<>(userService.editUser(id, userRequestBody), HttpStatus.OK);
     }

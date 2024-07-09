@@ -8,10 +8,8 @@ import java.util.List;
 
 @Data
 public class UpdateGameRequestBody {
-
     private String name;
     private int maxPlayersNumberForTeam;
-
     @URL(message = "URL does not have the right format")
     private String avatar;
     private List<User> subscribers;

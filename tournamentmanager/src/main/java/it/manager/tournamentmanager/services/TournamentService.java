@@ -48,23 +48,23 @@ public class TournamentService {
         return tournamentRepo.findAllByGame(game);
     }
 
-    public Tournament addTournament(CreateTournamentRequestBody tournamentRequestBody){
+    public Tournament addTournament(CreateTournamentRequestBody tournamentRequestBody) {
         Tournament tournamentToCreate = new Tournament();
         setTournamentFields(tournamentToCreate, tournamentRequestBody);
 
         return tournamentRepo.save(tournamentToCreate);
     }
 
-    public Tournament editTournament(UUID tournamentId, UpdateTournamentRequestBody tournamentRequestBody){
+    public Tournament editTournament(UUID tournamentId, UpdateTournamentRequestBody tournamentRequestBody) {
         Tournament tournamentToUpdate = tournamentRepo.findById(tournamentId)
-                .orElseThrow(()-> new RuntimeException("Tournament not found with Id:" + tournamentId));
+                .orElseThrow(() -> new RuntimeException("Tournament not found with Id:" + tournamentId));
         updateTournamentFields(tournamentToUpdate, tournamentRequestBody);
         return tournamentRepo.save(tournamentToUpdate);
     }
 
-    public DeleteTournamentResponseBody removeTournament(UUID tournamentId){
+    public DeleteTournamentResponseBody removeTournament(UUID tournamentId) {
         Tournament tournamentToDelete = tournamentRepo.findById(tournamentId)
-                .orElseThrow(()-> new RuntimeException("Tournament not found with Id:" + tournamentId));
+                .orElseThrow(() -> new RuntimeException("Tournament not found with Id:" + tournamentId));
 
         Tournament tournamentToShow = new Tournament();
 
@@ -91,7 +91,7 @@ public class TournamentService {
                 .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
 
         if (!tournament.getParticipants().contains(team)) {
-            throw new RuntimeException("This team does not participate in the tournament with Id: " + tournamentId );
+            throw new RuntimeException("This team does not participate in the tournament with Id: " + tournamentId);
         }
 
         tournament.getLosers().add(team);
@@ -125,14 +125,15 @@ public class TournamentService {
 
     public void setTournamentFields(Tournament tournamentToCreate, CreateTournamentRequestBody tournamentRequestBody) {
         tournamentToCreate.setAvatar(tournamentRequestBody.avatar());
-//        tournamentToCreate.setGame(tournamentRequestBody.game());
         tournamentToCreate.setName(tournamentRequestBody.name());
-//        tournamentToCreate.setBracket(tournamentRequestBody.getBracket());
-//        tournamentToCreate.setTournamentState(tournamentRequestBody.getTournamentState());
         tournamentToCreate.setDescription(tournamentRequestBody.description());
         tournamentToCreate.setPrize(tournamentRequestBody.prize());
         tournamentToCreate.setEndingDate(tournamentRequestBody.endingDate());
+//        Strumenti di debug
 //        tournamentToCreate.setParticipants(tournamentRequestBody.participants());
+//        tournamentToCreate.setGame(tournamentRequestBody.game());
+//        tournamentToCreate.setBracket(tournamentRequestBody.getBracket());
+//        tournamentToCreate.setTournamentState(tournamentRequestBody.getTournamentState());
     }
 
     public void setTournamentFieldsForDeletion(Tournament tournamentToCreate, Tournament tournamentRequestBody) {

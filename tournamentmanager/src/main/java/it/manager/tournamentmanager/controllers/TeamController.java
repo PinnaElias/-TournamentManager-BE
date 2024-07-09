@@ -68,15 +68,15 @@ public class TeamController {
         UUID myTeamId = me.getTeam() != null ? me.getTeam().getId() : null;
 
         if (myTeamId == null) {
-            // Se l'utente non è in nessun team, chiama il servizio con teamId e userId
+            // Se l'utente non è in nessun team, chiama il servizio con teamId e l'Id dell'utente loggato
             Team team = teamService.addUserToTeam(teamId, me.getId());
             return new ResponseEntity<>(team, HttpStatus.OK);
         } else if (!myTeamId.equals(teamId)) {
-            // Se l'utente è in un team, controlla se l'ID del team corrente è diverso da teamId
+            // Se l'utente è in un team, controlla se l'ID del suo team è diverso da teamId
             Team team = teamService.addUserToTeam(teamId, myTeamId);
             return new ResponseEntity<>(team, HttpStatus.OK);
         } else {
-            // Se l'utente è già nel team, l'operazione è vietata
+            // Se l'utente è già nel team, l'operazione viene vietata
             throw new UnauthorizedException("You are already in this team!");
         }
     }
